@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- ================================
+         LOGIN PAGE
+    ================================ -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <span class="kennel-icon">🐕</span>
+                <h1>S2 Kennel</h1>
+                <p>Admin Panel - Jammu</p>
+            </div>
+
+            <div id="loginError" class="login-error"></div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" id="loginBtn" class="btn btn-primary">Login</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-muted);">
+                🔒 Secured with Local Authentication
+            </p>
+        </div>
+    </div>
+
+    <!-- ================================
+         DASHBOARD PAGE
+    ================================ -->
+    <div id="dashboardPage" style="display: none;">
+        <div class="admin-wrapper">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <div class="sidebar-header">
+                    <h2>Admin</h2>
+                    <p>S2 Kennel Jammu</p>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <a class="nav-item active" data-section="dashboard" onclick="navigateToSection('dashboard')">
+                        <i>📊</i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a class="nav-item" data-section="addDog" onclick="navigateToSection('addDog')">
+                        <i>➕</i>
+                        <span>Add Dog</span>
+                    </a>
+                    <a class="nav-item" data-section="manageDogs" onclick="navigateToSection('manageDogs')">
+                        <i>🐕</i>
+                        <span>Manage Dogs</span>
+                    </a>
+                    <a class="nav-item" data-section="analytics" onclick="navigateToSection('analytics')">
+                        <i>📈</i>
+                        <span>Analytics</span>
+                    </a>
+                    <a class="nav-item" data-section="changePassword" onclick="navigateToSection('changePassword')">
+                        <i>🔐</i>
+                        <span>Change Password</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="logout-btn" onclick="handleLogout()">
+                        <i>🚪</i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="admin-main">
+                <!-- Header -->
+                <header class="admin-header">
+                    <h1>Admin Dashboard</h1>
+                    <div class="admin-info">
+                        <span class="admin-username" id="adminUsername">Admin</span>
+                    </div>
+                </header>
+
+                <!-- Dashboard Overview Section -->
+                <section id="dashboard" class="admin-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon dogs">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h2v2H7v-2zm8 0h2v2h-2v-2zm-4 4h2v2h-2v-2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalDogs">0</h3>
+                                <p>Total Dogs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon available">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="availableDogs">0</h3>
+                                <p>Available Dogs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon sold">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="soldDogs">0</h3>
+                                <p>Sold Dogs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon price">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="avgPrice">₹0</h3>
+                                <p>Average Price</p>
+                            </div>
+                        </div>
+                        <div class="stat-card" id="lastAddedDog">
+                            <div class="stat-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-info">
+                                <p style="color: var(--text-muted); font-size: 13px;">No dogs added yet</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-card">
+                        <h2>Welcome to Admin Panel</h2>
+                        <p style="color: var(--text-light);">Manage your S2 Kennel Jammu website content here. Use the sidebar navigation to:</p>
+                        <ul style="color: var(--text-light); margin-top: 15px; margin-left: 20px;">
+                            <li>View dashboard statistics</li>
+                            <li>Add new dogs to your inventory</li>
+                            <li>Edit or delete existing dogs</li>
+                            <li>Change your admin password</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Add Dog Section -->
+                <section id="addDog" class="admin-section">
+                    <div class="admin-card">
+                        <h2>Add New Dog</h2>
+                        <form id="addDogForm" onsubmit="handleAddDog(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dogName">Dog Name *</label>
+                                    <input type="text" id="dogName" placeholder="e.g., Max" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dogBreed">Breed *</label>
+                                    <input type="text" id="dogBreed" placeholder="e.g., Labrador" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dogAge">Age *</label>
+                                    <input type="text" id="dogAge" placeholder="e.g., 2 years" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dogGender">Gender *</label>
+                                    <select id="dogGender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dogPrice">Price (₹) *</label>
+                                    <input type="text" id="dogPrice" placeholder="e.g., 15000" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dogStatus">Status *</label>
+                                    <select id="dogStatus" required>
+                                        <option value="Available">Available</option>
+                                        <option value="Sold">Sold</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dogImage">Image URL</label>
+                                <input type="url" id="dogImage" placeholder="https://example.com/dog-image.jpg">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dogDescription">Description</label>
+                                <textarea id="dogDescription" rows="4" placeholder="Describe the dog..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Add Dog</button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Manage Dogs Section -->
+                <section id="manageDogs" class="admin-section">
+                    <div class="admin-card">
+                        <h2>Manage Dogs</h2>
+                        <div class="table-responsive">
+                            <table class="dogs-table" id="dogsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Breed</th>
+                                        <th>Age</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dogsTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Loading dogs...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics" class="admin-section">
+                    <div class="admin-card">
+                        <h2>Analytics</h2>
+                        <div id="analyticsContent">
+                            <p style="color: var(--text-light);">Loading analytics data...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Change Password Section -->
+                <section id="changePassword" class="admin-section">
+                    <div class="admin-card">
+                        <h2>Change Password</h2>
+                        <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password *</label>
+                                <input type="password" id="currentPassword" placeholder="Enter current password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="newPassword">New Password *</label>
+                                <input type="password" id="newPassword" placeholder="Enter new password" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password *</label>
+                                <input type="password" id="confirmPassword" placeholder="Confirm new password" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Edit Dog Modal -->
+    <div class="modal-overlay" id="editDogModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Dog</h2>
+                <button class="modal-close" onclick="closeEditModal()">×</button>
+            </div>
+            <form id="editDogForm" onsubmit="handleEditDog(event)">
+                <input type="hidden" id="editDogId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDogName">Dog Name *</label>
+                            <input type="text" id="editDogName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDogBreed">Breed *</label>
+                            <input type="text" id="editDogBreed" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDogAge">Age *</label>
+                            <input type="text" id="editDogAge" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDogGender">Gender *</label>
+                            <select id="editDogGender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDogPrice">Price (₹) *</label>
+                            <input type="text" id="editDogPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDogStatus">Status *</label>
+                            <select id="editDogStatus" required>
+                                <option value="Available">Available</option>
+                                <option value="Sold">Sold</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDogImage">Image URL</label>
+                        <input type="url" id="editDogImage">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editDogDescription">Description</label>
+                        <textarea id="editDogDescription" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteDogModal">
+        <div class="modal-content delete-modal">
+            <div class="delete-modal-icon">🗑️</div>
+            <h2>Delete Dog</h2>
+            <p class="delete-modal-message">Are you sure you want to delete <strong id="deleteDogName"></strong>?</p>
+            <p class="delete-modal-warning">This action cannot be undone.</p>
+            <div class="delete-modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Admin JavaScript -->
+    <script src="admin.js"></script>
+</body>
+
+</html>

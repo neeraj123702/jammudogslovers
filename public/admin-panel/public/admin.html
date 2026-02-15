@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-section" class="hidden">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <div id="dashboard" class="hidden">
+            <header>
+                <h1>Admin Dashboard</h1>
+                <button id="logout">Logout</button>
+            </header>
+            <nav>
+                <ul>
+                    <li><a href="#add-dog">Add Dog</a></li>
+                    <li><a href="#manage-dogs">Manage Dogs</a></li>
+                </ul>
+            </nav>
+            <main>
+                <section id="add-dog">
+                    <h2>Add Dog</h2>
+                    <form id="add-dog-form">
+                        <input type="text" id="dog-name" placeholder="Dog Name" required>
+                        <input type="text" id="dog-breed" placeholder="Dog Breed" required>
+                        <input type="file" id="dog-image" accept="image/*" required>
+                        <button type="submit">Add Dog</button>
+                    </form>
+                </section>
+
+                <section id="manage-dogs">
+                    <h2>Manage Dogs</h2>
+                    <div id="dog-list"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="scripts/admin.js"></script>
+</body>
+</html>
